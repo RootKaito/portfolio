@@ -1,0 +1,1 @@
+export const bodyFooter = `<footer><a class="brand" href="#home" aria-label="Lucas Rocha, home"><b>LR</b><span>Lucas Rocha</span></a><p>Security, technology and people.</p><a href="#home" class="back-top">Back to top ↑</a></footer>`;
