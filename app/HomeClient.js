@@ -93,7 +93,7 @@ export default function HomeClient({ articles }) {
       {
         title: "Cyber Coffee",
         type: "Newsletter",
-        target: "https://www.linkedin.com/newsletters/7498925114399395842",
+        target: "/writing",
       },
       { title: "About & Experience", type: "Page", target: "#about" },
       { title: "Technologies", type: "Tools", target: "#technologies" },
@@ -230,9 +230,7 @@ export default function HomeClient({ articles }) {
               </div>
               <a
                 className="text-link"
-                href="https://www.linkedin.com/newsletters/7498925114399395842"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/writing"
               >
                 View all editions <span aria-hidden="true">→</span>
               </a>
@@ -243,12 +241,10 @@ export default function HomeClient({ articles }) {
                   <img src={article.image} alt="" loading="lazy" />
                   <div className="article-copy">
                     <time dateTime={article.isoDate}>{article.dateLabel}</time>
-                    <h3 lang="pt-BR">
+                    <h3>
                       <a
                         className="card-button"
                         href={article.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
                       >
                         {article.title}
                       </a>

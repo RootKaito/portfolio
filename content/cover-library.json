@@ -1,0 +1,369 @@
+[
+  {
+    "id": "prompt-injection",
+    "season": 1,
+    "episode": 7,
+    "plannedDate": "2026-10-08",
+    "articleNumber": "17",
+    "title": "Prompt injection não tem patch",
+    "pillar": "IA/Agentes",
+    "tags": [
+      "prompt injection",
+      "agentes",
+      "llm"
+    ],
+    "alt": "An untrusted document redirects an AI agent’s tool path across a trust boundary.",
+    "status": "planned",
+    "image": "/assets/writing/library/prompt-injection.webp",
+    "cardImage": "/assets/writing/library/prompt-injection-card.webp"
+  },
+  {
+    "id": "bola",
+    "season": 1,
+    "episode": 8,
+    "plannedDate": "2026-10-15",
+    "articleNumber": "16",
+    "title": "BOLA",
+    "pillar": "AppSec hands-on",
+    "tags": [
+      "bola",
+      "idor",
+      "object authorization"
+    ],
+    "alt": "A misrouted API request reaches another customer’s data compartment.",
+    "status": "planned",
+    "image": "/assets/writing/library/bola.webp",
+    "cardImage": "/assets/writing/library/bola-card.webp"
+  },
+  {
+    "id": "rbac",
+    "season": 1,
+    "episode": 9,
+    "plannedDate": "2026-10-22",
+    "articleNumber": "14",
+    "title": "RBAC na prática",
+    "pillar": "Controle de Acesso",
+    "tags": [
+      "rbac",
+      "roles",
+      "permissoes"
+    ],
+    "alt": "Three role badges connect to different permitted resource compartments.",
+    "status": "planned",
+    "image": "/assets/writing/library/rbac.webp",
+    "cardImage": "/assets/writing/library/rbac-card.webp"
+  },
+  {
+    "id": "lgpd-developers",
+    "season": 1,
+    "episode": 10,
+    "plannedDate": "2026-10-29",
+    "articleNumber": "09",
+    "title": "LGPD para devs",
+    "pillar": "Dados/Privacidade",
+    "tags": [
+      "lgpd",
+      "privacidade",
+      "privacy"
+    ],
+    "alt": "A consent gate and minimization filter reduce personal data before storage.",
+    "status": "planned",
+    "image": "/assets/writing/library/lgpd-developers.webp",
+    "cardImage": "/assets/writing/library/lgpd-developers-card.webp"
+  },
+  {
+    "id": "entra-sso",
+    "season": 1,
+    "episode": 11,
+    "plannedDate": "2026-11-05",
+    "articleNumber": "15",
+    "title": "SSO com Entra ID",
+    "pillar": "Controle de Acesso",
+    "tags": [
+      "sso",
+      "entra",
+      "federacao"
+    ],
+    "alt": "One identity gateway provides access to three separate applications.",
+    "status": "planned",
+    "image": "/assets/writing/library/entra-sso.webp",
+    "cardImage": "/assets/writing/library/entra-sso-card.webp"
+  },
+  {
+    "id": "privacy-analytics",
+    "season": 1,
+    "episode": 12,
+    "plannedDate": "2026-11-12",
+    "articleNumber": "10",
+    "title": "Analytics (Clarity)",
+    "pillar": "Dados/Privacidade",
+    "tags": [
+      "clarity",
+      "analytics",
+      "session replay"
+    ],
+    "alt": "A browser interaction heatmap preserves masked sensitive form fields.",
+    "status": "planned",
+    "image": "/assets/writing/library/privacy-analytics.webp",
+    "cardImage": "/assets/writing/library/privacy-analytics-card.webp"
+  },
+  {
+    "id": "insurance-data",
+    "season": 1,
+    "episode": 13,
+    "plannedDate": "2026-11-19",
+    "articleNumber": "11",
+    "title": "Dados sensíveis em seguro",
+    "pillar": "Dados/Privacidade",
+    "tags": [
+      "seguro",
+      "insurance",
+      "sensitive data"
+    ],
+    "alt": "An insurance dossier separates identity, health and vehicle information into protected compartments.",
+    "status": "planned",
+    "image": "/assets/writing/library/insurance-data.webp",
+    "cardImage": "/assets/writing/library/insurance-data-card.webp"
+  },
+  {
+    "id": "saas-contract-risk",
+    "season": 1,
+    "episode": 14,
+    "plannedDate": "2026-11-26",
+    "articleNumber": "12",
+    "title": "Risco contratual SaaS/LGPD",
+    "pillar": "Dados/Privacidade",
+    "tags": [
+      "saas",
+      "contrato",
+      "contract",
+      "lgpd"
+    ],
+    "alt": "A contract and risk scale connect company data to a SaaS provider.",
+    "status": "planned",
+    "image": "/assets/writing/library/saas-contract-risk.webp",
+    "cardImage": "/assets/writing/library/saas-contract-risk-card.webp"
+  },
+  {
+    "id": "passkeys",
+    "season": 2,
+    "episode": 1,
+    "plannedDate": "2027-01-07",
+    "articleNumber": "01",
+    "title": "Passkeys",
+    "pillar": "Identidade",
+    "tags": [
+      "passkeys",
+      "webauthn",
+      "fido2"
+    ],
+    "alt": "A device-held private key and server-side public key form a passkey authentication pair.",
+    "status": "planned",
+    "image": "/assets/writing/library/passkeys.webp",
+    "cardImage": "/assets/writing/library/passkeys-card.webp"
+  },
+  {
+    "id": "password-hash-jwt",
+    "season": 2,
+    "episode": 2,
+    "plannedDate": "2027-01-14",
+    "articleNumber": "02",
+    "title": "Hash de senha e JWT",
+    "pillar": "Criptografia",
+    "tags": [
+      "hash",
+      "senha",
+      "jwt",
+      "password"
+    ],
+    "alt": "A one-way password hash sits beside a signed three-part token with a visible payload.",
+    "status": "planned",
+    "image": "/assets/writing/library/password-hash-jwt.webp",
+    "cardImage": "/assets/writing/library/password-hash-jwt-card.webp"
+  },
+  {
+    "id": "supply-chain",
+    "season": 2,
+    "episode": 3,
+    "plannedDate": "2027-01-21",
+    "articleNumber": "04",
+    "title": "Supply chain/SBOM/SLSA",
+    "pillar": "Supply Chain",
+    "tags": [
+      "supply chain",
+      "sbom",
+      "slsa",
+      "dependencies"
+    ],
+    "alt": "Dependency components, a build chain and an inventory ledger establish artifact provenance.",
+    "status": "planned",
+    "image": "/assets/writing/library/supply-chain.webp",
+    "cardImage": "/assets/writing/library/supply-chain-card.webp"
+  },
+  {
+    "id": "cloud-least-privilege",
+    "season": 2,
+    "episode": 4,
+    "plannedDate": "2027-01-28",
+    "articleNumber": "05",
+    "title": "Least privilege na nuvem",
+    "pillar": "Cloud & IAM",
+    "tags": [
+      "least privilege",
+      "iam",
+      "cloud",
+      "menor privilegio"
+    ],
+    "alt": "A workload identity receives access to only one resource inside a compartmentalized cloud.",
+    "status": "planned",
+    "image": "/assets/writing/library/cloud-least-privilege.webp",
+    "cardImage": "/assets/writing/library/cloud-least-privilege-card.webp"
+  },
+  {
+    "id": "container-security",
+    "season": 2,
+    "episode": 5,
+    "plannedDate": "2027-02-04",
+    "articleNumber": "06",
+    "title": "Segurança de contêiner",
+    "pillar": "Cloud & Infra",
+    "tags": [
+      "container",
+      "docker",
+      "kubernetes"
+    ],
+    "alt": "Software containers share a host while a suspicious workload remains isolated.",
+    "status": "planned",
+    "image": "/assets/writing/library/container-security.webp",
+    "cardImage": "/assets/writing/library/container-security-card.webp"
+  },
+  {
+    "id": "zero-trust",
+    "season": 2,
+    "episode": 6,
+    "plannedDate": "2027-02-11",
+    "articleNumber": "07",
+    "title": "Zero Trust na prática",
+    "pillar": "Cloud & Infra",
+    "tags": [
+      "zero trust",
+      "continuous verification"
+    ],
+    "alt": "An identity token is checked at each service boundary along its path.",
+    "status": "planned",
+    "image": "/assets/writing/library/zero-trust.webp",
+    "cardImage": "/assets/writing/library/zero-trust-card.webp"
+  },
+  {
+    "id": "mobile-security",
+    "season": 2,
+    "episode": 7,
+    "plannedDate": "2027-02-18",
+    "articleNumber": "08",
+    "title": "Segurança mobile",
+    "pillar": "Mobile",
+    "tags": [
+      "mobile",
+      "android",
+      "ios"
+    ],
+    "alt": "A mobile device separates apps, protects local secrets and controls sensor access.",
+    "status": "planned",
+    "image": "/assets/writing/library/mobile-security.webp",
+    "cardImage": "/assets/writing/library/mobile-security-card.webp"
+  },
+  {
+    "id": "engineering-appsec-adoption",
+    "season": 2,
+    "episode": 8,
+    "plannedDate": "2027-02-25",
+    "articleNumber": "03",
+    "title": "Adoção de controles de AppSec pela engenharia",
+    "pillar": "Liderança Técnica",
+    "tags": [
+      "adocao",
+      "engineering",
+      "champions",
+      "controls"
+    ],
+    "alt": "An engineering team integrates a security checkpoint into its delivery workflow.",
+    "status": "planned",
+    "image": "/assets/writing/library/engineering-appsec-adoption.webp",
+    "cardImage": "/assets/writing/library/engineering-appsec-adoption-card.webp"
+  },
+  {
+    "id": "cvss-vulnerability-management",
+    "season": 2,
+    "episode": 9,
+    "plannedDate": "2027-03-04",
+    "articleNumber": "09",
+    "title": "CVSS e gestão de vulnerabilidade",
+    "pillar": "Operação de Segurança",
+    "tags": [
+      "cvss",
+      "vulnerability",
+      "prioritization"
+    ],
+    "alt": "A contextual lens prioritizes vulnerabilities by exposure and impact.",
+    "status": "planned",
+    "image": "/assets/writing/library/cvss-vulnerability-management.webp",
+    "cardImage": "/assets/writing/library/cvss-vulnerability-management-card.webp"
+  },
+  {
+    "id": "siem-observability",
+    "season": 2,
+    "episode": 10,
+    "plannedDate": "2027-03-11",
+    "articleNumber": "12",
+    "title": "Observabilidade (SIEM)",
+    "pillar": "Operação de Segurança",
+    "tags": [
+      "siem",
+      "observabilidade",
+      "logs",
+      "correlation"
+    ],
+    "alt": "A correlation lens turns distributed event streams into a coherent incident signal.",
+    "status": "planned",
+    "image": "/assets/writing/library/siem-observability.webp",
+    "cardImage": "/assets/writing/library/siem-observability-card.webp"
+  },
+  {
+    "id": "incident-response",
+    "season": 2,
+    "episode": 11,
+    "plannedDate": "2027-03-18",
+    "articleNumber": "10",
+    "title": "Resposta a incidente",
+    "pillar": "Operação de Segurança",
+    "tags": [
+      "incident response",
+      "resposta",
+      "containment"
+    ],
+    "alt": "An affected node is contained while evidence is preserved and healthy services recover.",
+    "status": "planned",
+    "image": "/assets/writing/library/incident-response.webp",
+    "cardImage": "/assets/writing/library/incident-response-card.webp"
+  },
+  {
+    "id": "ai-beyond-prompt-injection",
+    "season": 2,
+    "episode": 12,
+    "plannedDate": "2027-03-25",
+    "articleNumber": "13",
+    "title": "IA além de prompt injection",
+    "pillar": "Segurança & IA",
+    "tags": [
+      "ai security",
+      "ia",
+      "model",
+      "poisoning",
+      "tool permissions"
+    ],
+    "alt": "An AI model exposes distinct risks in training data, tool permissions and output handling.",
+    "status": "planned",
+    "image": "/assets/writing/library/ai-beyond-prompt-injection.webp",
+    "cardImage": "/assets/writing/library/ai-beyond-prompt-injection-card.webp"
+  }
+]

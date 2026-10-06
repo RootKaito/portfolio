@@ -34,3 +34,6 @@
 .technology img[src$="aikido.png"]{border-radius:6px}.technology span{text-align:center;line-height:1.35}
 
 .technology img.official-tool-icon[src$="threat-dragon.svg"]{filter:invert(1)}
+
+/* Preserve the full editorial scene in compact newsletter thumbnails. */
+.article-card>img{object-fit:contain;background:#070c11}

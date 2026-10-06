@@ -1,7 +1,6 @@
 import HomeClient from "./HomeClient";
-import { getNewsletterArticles } from "./lib/newsletter";
+import { getEnglishArticleCards } from "./lib/english-articles";
 
-export default async function Home() {
-  const articles = await getNewsletterArticles();
-  return <HomeClient articles={articles} />;
+export default function Home() {
+  return <HomeClient articles={getEnglishArticleCards()} />;
 }
