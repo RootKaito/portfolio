@@ -1,3 +1,5 @@
+> O fluxo automático está documentado em [Newsletter automática](docs/newsletter-automation.md). As instruções abaixo também permitem manutenção editorial manual.
+
 # Cyber Coffee English editions
 
 `/writing` lists published translations. `/writing/[slug]` renders the complete article. The home page and search link to those internal routes. Portuguese originals and newsletter subscriptions remain on LinkedIn.

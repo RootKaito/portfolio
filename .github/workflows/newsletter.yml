@@ -1,0 +1,49 @@
+name: Publish newsletter
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: newsletter-main
+  cancel-in-progress: false
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - name: Translate new articles and select existing covers
+        id: sync
+        continue-on-error: true
+        run: npm run newsletter:sync
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ vars.GEMINI_MODEL || 'gemini-2.5-flash' }}
+      - name: Validate site before publishing
+        run: npm run build
+      - name: Save source archive and validated translations
+        id: commit
+        run: |
+          git config user.name 'RootKaito'
+          git config user.email 'b4m92vbrzg@privaterelay.appleid.com'
+          git add content/generated-articles.json content/newsletter-sources.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'content: sync Cyber Coffee newsletter'
+            git push origin HEAD:main
+            echo 'changed=true' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Report translation failures
+        if: steps.sync.outcome == 'failure'
+        run: |
+          echo 'Some articles could not be translated. Existing pages are preserved; archived articles will retry on the next run.'
+          exit 1

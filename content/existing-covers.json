@@ -1,0 +1,23 @@
+[
+  {
+    "id": "azure-key-vault",
+    "title": "Azure Key Vault and secrets management",
+    "alt": "A glass vault protects a key and connects to workloads.",
+    "image": "/assets/writing/azure-key-vault.webp",
+    "cardImage": "/assets/writing/azure-key-vault-card.webp"
+  },
+  {
+    "id": "frontend-trust-boundary",
+    "title": "Frontend security and input validation",
+    "alt": "A trust boundary separates the browser and the backend.",
+    "image": "/assets/writing/frontend-trust-boundary.webp",
+    "cardImage": "/assets/writing/frontend-trust-boundary-card.webp"
+  },
+  {
+    "id": "security-roadmap",
+    "title": "Security roadmap and governance",
+    "alt": "A staged roadmap for implementing security controls.",
+    "image": "/assets/writing/security-roadmap.webp",
+    "cardImage": "/assets/writing/security-roadmap-card.webp"
+  }
+]

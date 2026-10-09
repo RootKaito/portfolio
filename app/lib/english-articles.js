@@ -1,3 +1,4 @@
+import generated from '../../content/generated-articles.json';
 // English translations of the complete source text retrieved from Cyber Coffee's
 // public RSS feed on 2026-10-06. Add reviewed translations here to publish editions.
 const editions = [
@@ -148,8 +149,9 @@ const editions = [
   }
 ];
 
-export const englishArticles = editions.map((article) => {
-  const words = [article.lead, ...article.introduction, ...article.sections.flatMap(section => [section.title, ...section.paragraphs, ...(section.list || []), ...(section.after || [])])].join(' ').split(/\s+/).length;
+const contentText = nodes => (nodes || []).map(node => node.text ?? contentText(node.children)).join(' ');
+export const englishArticles = [...editions, ...generated.filter(article => !editions.some(existing => existing.slug === article.slug || existing.sourceUrl === article.sourceUrl))].sort((a, b) => b.isoDate.localeCompare(a.isoDate)).map((article) => {
+  const words = [article.lead, contentText(article.content), ...article.introduction, ...article.sections.flatMap(section => [section.title, ...section.paragraphs, ...(section.list || []), ...(section.after || [])])].join(' ').split(/\s+/).length;
   return { ...article, link: `/writing/${article.slug}`, readingMinutes: Math.max(1, Math.ceil(words / 220)), dateLabel: new Date(`${article.isoDate}T12:00:00Z`).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric', timeZone: 'UTC' }).toUpperCase() };
 });
 export function getEnglishArticle(slug) { return englishArticles.find(article => article.slug === slug); }

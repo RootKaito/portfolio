@@ -1,3 +1,5 @@
+> A seleção automática de capas está integrada ao workflow de newsletter. Consulte [Newsletter automática](newsletter-automation.md) para o estado atual e os limites do fluxo.
+
 # Banco de capas da Cyber Coffee
 
 20 capas específicas para as pautas fornecidas: 8 da temporada 1 (2026) e 12 da temporada 2 (2027). Com as 3 capas atuais, o projeto tem 23 conceitos de capa.
