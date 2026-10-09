@@ -12,7 +12,7 @@
 
 Cada registro tem id estável, temporada, edição, número original da pauta, título, data planejada, pilar, tags, descrição alternativa e caminhos das duas versões WebP. As capas são interpretações dos títulos; conferir a aderência ao texto final durante a importação. As pautas de SIEM e IA além de prompt injection ainda não estavam escritas quando os temas foram enviados.
 
-## Uso na futura importação
+## Uso manual do catálogo
 
 1. Detectar a edição real no feed. Nunca publicar só porque chegou a data planejada.
 2. Encontrar a capa pelo coverId explícito ou título exato normalizado. O número da pauta sozinho não é único entre temporadas.
@@ -21,4 +21,4 @@ Cada registro tem id estável, temporada, edição, número original da pauta, t
 
 Exemplo: resolvePlannedCover({ coverId: 'bola' }) retorna os campos prontos para o componente Artwork atual.
 
-As imagens estão prontas. O workflow RSS → tradução → deploy ainda precisa ser implementado e ativado; este catálogo não executa chamadas de IA, não agenda publicação e não adiciona artigos futuros à listagem.
+O workflow RSS → tradução → deploy usa o catálogo e analisa o texto para selecionar uma capa existente. O catálogo isoladamente não agenda publicação nem adiciona artigos futuros à listagem.

@@ -28,7 +28,7 @@ jobs:
         run: npm run newsletter:sync
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_MODEL: ${{ vars.GEMINI_MODEL || 'gemini-2.5-flash' }}
+          GEMINI_MODEL: ${{ vars.GEMINI_MODEL || 'gemini-3.8-flash' }}
       - name: Validate site before publishing
         run: npm run build
       - name: Save source archive and validated translations

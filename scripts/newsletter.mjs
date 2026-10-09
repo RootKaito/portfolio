@@ -64,7 +64,7 @@ export function validateTranslation(source, result, covers) {
   if (!slug) throw new Error('Invalid slug');
   return { slug: `${slug}-${hash(source.sourceUrl).slice(0, 8)}`, title: result.title, summary: result.summary, lead: result.summary, isoDate: source.isoDate, tags: result.tags, sourceUrl: source.sourceUrl, sourceHash: source.sourceHash, coverId: cover.id, coverReason: result.coverReason, image: cover.image, cardImage: cover.cardImage, imageAlt: cover.alt, introduction: [], sections: [], content: translate(source.content) };
 }
-export async function translateArticle(source, covers, { apiKey, model = 'gemini-2.5-flash', fetcher = fetch, sleep = ms => new Promise(r => setTimeout(r, ms)) } = {}) {
+export async function translateArticle(source, covers, { apiKey, model = 'gemini-3.8-flash', fetcher = fetch, sleep = ms => new Promise(r => setTimeout(r, ms)) } = {}) {
   if (!apiKey) throw new Error('GEMINI_API_KEY is not configured');
   if (!/^gemini-[a-z0-9.-]+$/.test(model)) throw new Error('Invalid Gemini model');
   const schema = { type: 'object', properties: { title: { type: 'string' }, summary: { type: 'string' }, tags: { type: 'array', items: { type: 'string' } }, coverId: { type: 'string', enum: [...covers.map(c => c.id), 'none'] }, coverReason: { type: 'string' }, translations: { type: 'array', items: { type: 'object', properties: { id: { type: 'string' }, text: { type: 'string' } }, required: ['id', 'text'] } } }, required: ['title', 'summary', 'tags', 'coverId', 'coverReason', 'translations'] };

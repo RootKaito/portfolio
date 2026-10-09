@@ -30,7 +30,7 @@ console.log(`Feed: ${incoming.length}; archived: ${archive.length}; pending: ${p
 let failures = 0;
 for (const source of pending.slice(0, 3)) {
   try {
-    const article = await translateArticle(source, covers, { apiKey: process.env.GEMINI_API_KEY, model: process.env.GEMINI_MODEL || 'gemini-2.5-flash' });
+    const article = await translateArticle(source, covers, { apiKey: process.env.GEMINI_API_KEY, model: process.env.GEMINI_MODEL || 'gemini-3.8-flash' });
     generated.push(article);
     await save('content/generated-articles.json', generated);
     console.log(`Translated: ${article.slug}; cover: ${article.coverId}`);

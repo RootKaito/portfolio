@@ -8,7 +8,7 @@ O workflow `.github/workflows/newsletter.yml` consulta o feed público do Cyber 
 4. Escolhe uma capa existente pelo assunto e registra `coverId` e `coverReason`. Não gera imagens nem usa serviço pago de imagens. Os catálogos são `content/cover-library.json` e `content/existing-covers.json`.
 5. Valida blocos de tradução, metadados e capa, executa o build e faz commit apenas dos dois arquivos de conteúdo. A integração Git da Vercel publica os commits de `main`.
 
-O modelo padrão é `gemini-2.5-flash`. A variável de Actions `GEMINI_MODEL` permite alterar o modelo. A disponibilidade e a cota gratuita dependem do projeto no Google AI Studio; a rotina não ativa faturamento. Respostas 429 e 5xx recebem até duas novas tentativas. Falhas aparecem no workflow e os artigos arquivados continuam pendentes para a próxima execução. Traduções válidas podem ser publicadas mesmo que outro artigo falhe.
+O modelo padrão é `gemini-3.8-flash`. A variável de Actions `GEMINI_MODEL` permite alterar o modelo. A disponibilidade e a cota gratuita dependem do projeto no Google AI Studio; a rotina não ativa faturamento. Respostas 429 e 5xx recebem até duas novas tentativas. Falhas aparecem no workflow e os artigos arquivados continuam pendentes para a próxima execução. Traduções válidas podem ser publicadas mesmo que outro artigo falhe.
 
 A validação estrutural não substitui revisão editorial: confira traduções de termos e alegações técnicas. Alterações no original após a primeira tradução são arquivadas, mas não sobrescrevem automaticamente uma edição publicada. Para retraduzir uma edição automática, remova sua entrada de `content/generated-articles.json` e execute novamente. As traduções manuais permanecem protegidas.
 

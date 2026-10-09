@@ -14,4 +14,4 @@ The first three editions are English translations of the full Portuguese texts r
 4. Run `npm run build` and inspect the listing, article and source link.
 5. Deploy through the project's usual workflow.
 
-Only saved translations are published. New LinkedIn editions are not automatically translated or published. The existing RSS helper is retained for future import tooling; it is no longer used on the home page. Reading time is calculated at 220 words per minute. The home page shows the latest three English editions.
+Only saved translations are published. New LinkedIn editions are imported by the GitHub Actions workflow and saved in `content/generated-articles.json`. The legacy RSS helper is not used on the home page. Reading time is calculated at 220 words per minute. The home page shows the latest three English editions.
