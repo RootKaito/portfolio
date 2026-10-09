@@ -238,7 +238,7 @@ export default function HomeClient({ articles }) {
             <div className="article-grid">
               {articles.map((article) => (
                 <article className="article-card" key={article.link}>
-                  <img src={article.image} alt="" loading="lazy" />
+                  <img src={article.image} alt="" width="640" height="427" loading="lazy" />
                   <div className="article-copy">
                     <time dateTime={article.isoDate}>{article.dateLabel}</time>
                     <h3>

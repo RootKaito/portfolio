@@ -35,5 +35,17 @@
 
 .technology img.official-tool-icon[src$="threat-dragon.svg"]{filter:invert(1)}
 
-/* Preserve the full editorial scene in compact newsletter thumbnails. */
-.article-card>img{object-fit:contain;background:#070c11}
+/* Editorial covers retain their landscape composition at every breakpoint. */
+.article-grid{align-items:stretch}
+.article-card{display:flex;flex-direction:column;min-width:0;min-height:0;padding:0;gap:0;overflow:hidden}
+.article-card>img{display:block;flex:none;width:100%;height:auto;min-height:0;aspect-ratio:3/2;object-fit:contain;object-position:center;border:0;border-bottom:1px solid var(--border);border-radius:0;background:#070c11}
+.article-card:first-child>img{object-position:center}
+.article-copy{flex:1;min-width:0;padding:20px}
+.article-copy time{font-size:10px;margin:0 0 10px}
+.article-copy h3{font-size:17px;line-height:1.35;margin:0 0 12px}
+.article-copy>p{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;font-size:13px;line-height:1.5;margin-bottom:18px}
+.article-copy .tags{display:flex;flex-wrap:wrap;margin-top:auto;gap:6px}
+.article-copy .tags li{font-size:9px;padding:4px 8px}
+.article-card .mobile-arrow{display:none}
+@media(max-width:600px){.article-copy{padding:18px}.article-copy h3{font-size:18px}.article-copy>p{font-size:14px}}
+
