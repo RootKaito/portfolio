@@ -49,3 +49,43 @@
 .article-card .mobile-arrow{display:none}
 @media(max-width:600px){.article-copy{padding:18px}.article-copy h3{font-size:18px}.article-copy>p{font-size:14px}}
 
+
+/* Security Labs: shared portfolio cards and responsive catalogue. */
+.labs-intro{padding:38px 58px 32px}
+.labs-intro h1{font-size:48px;letter-spacing:-1.7px;line-height:1.06;margin:12px 0 18px;max-width:720px}
+.labs-intro>p:last-child{max-width:680px;font-size:17px}
+.labs-section{margin-top:22px;padding-top:28px;padding-bottom:30px}
+.labs-section .filters{margin-top:0}
+.labs-section .project-grid{grid-template-columns:1fr}
+.labs-section .project-card{max-width:none;min-height:214px}
+.labs-section .card-content{padding:24px 28px}
+.labs-section .card-content h3{font-size:24px;max-width:none}
+.labs-section .card-content>p:not(.eyebrow){max-width:540px;font-size:15px}
+.labs-section .card-content .tags li{font-size:11px}
+.lab-meta{margin:24px 0 0;font-size:12px;color:var(--dim)}
+.labs-empty{padding:35px 0}
+.labs-empty h3{font-size:24px;margin-bottom:12px}
+.labs-empty p{max-width:510px}
+.home-preview{margin-top:22px}
+.home-preview .preview-note{margin-bottom:20px;font-size:15px}
+.preview-heading{margin-top:30px}
+@media(max-width:1000px){.labs-intro{padding:32px 35px}
+.labs-intro h1{font-size:40px}
+}
+@media(max-width:600px){.labs-intro{padding:26px 20px}
+.labs-intro h1{font-size:34px;letter-spacing:-1.1px}
+.labs-intro>p:last-child{font-size:15px}
+.labs-section{padding:22px 20px}
+.labs-section .filters{gap:6px}
+.labs-section .filter{padding:9px 10px;font-size:12px}
+.labs-section .card-content{padding:0}
+.labs-section .card-content h3{font-size:17px;max-width:200px}
+.labs-section .card-content>p:not(.eyebrow){display:none}
+.labs-section .card-content .tags{display:none}
+.labs-section .project-card{min-height:85px}
+.lab-meta{font-size:11px}
+.home-preview .section-top>.text-link{display:inline-flex;white-space:normal}
+.home-preview .section-top{display:block}
+.home-preview .section-top>.text-link{margin-top:14px}
+}
+

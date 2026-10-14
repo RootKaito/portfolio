@@ -5,8 +5,10 @@ import { bodyChunkA } from "./bodyChunkA";
 import { bodyChunkB } from "./bodyChunkB";
 import { bodyFooter } from "./bodyFooter";
 import { bodyDialogs } from "./bodyDialogs";
+import LabsContent from "./labs/LabsContent";
+import { publishedLabs } from "./lib/labs";
 
-export default function HomeClient({ articles }) {
+export default function HomeClient({ articles = [], labsPage = false }) {
   useEffect(() => {
     const menu = document.getElementById("mobile-menu");
     const opener = document.querySelector(".menu-toggle");
@@ -65,12 +67,13 @@ export default function HomeClient({ articles }) {
     mediaQuery.addEventListener("change", onMediaChange);
 
     function updateNavigation() {
+      if (labsPage) return;
       let current = "#home";
       for (const id of ["home", "projects", "writing", "about", "contact"])
-        if (document.getElementById(id).getBoundingClientRect().top < innerHeight * 0.35)
+        if (document.getElementById(id)?.getBoundingClientRect().top < innerHeight * 0.35)
           current = "#" + id;
       document.querySelectorAll(".desktop-nav a").forEach((link) => {
-        if (link.hash === current) link.setAttribute("aria-current", "location");
+        if (link.getAttribute("href") === current) link.setAttribute("aria-current", "location");
         else link.removeAttribute("aria-current");
       });
     }
@@ -79,11 +82,8 @@ export default function HomeClient({ articles }) {
 
     const entries = [
       { title: "Home", type: "Page", target: "#home" },
-      {
-        title: "Três Portões · Secure pipeline lab",
-        type: "Public lab",
-        target: "https://rootkaito.github.io/tutorial-secure-pipeline/",
-      },
+      { title: "Security Labs", type: "Page", target: "/labs" },
+      ...publishedLabs.map((lab) => ({ title: `${lab.title} · ${lab.category}`, type: "Public lab", target: lab.documentation })),
       { title: "Open source contributions", type: "Page", target: "#open-source" },
       {
         title: "Nuclei templates · PR #17027",
@@ -98,14 +98,14 @@ export default function HomeClient({ articles }) {
       { title: "About & Experience", type: "Page", target: "#about" },
       { title: "Technologies", type: "Tools", target: "#technologies" },
       { title: "Contact", type: "Let’s talk", target: "#contact" },
-      ...[...document.querySelectorAll(".project-card a.card-button,.article-card a.card-button")].map(
+      ...[...document.querySelectorAll(".article-card a.card-button")].map(
         (link) => ({
           title: link.textContent.trim(),
           type: link.closest(".article-card") ? "Article" : "Public work",
           target: link.getAttribute("href"),
         })
       ),
-    ];
+    ].map((entry) => ({ ...entry, target: labsPage && entry.target.startsWith("#") ? "/" + entry.target : entry.target }));
 
     function normalize(text) {
       return text
@@ -181,7 +181,7 @@ export default function HomeClient({ articles }) {
     };
     document.addEventListener("keydown", onGlobalKeydown);
 
-    const filterButtons = [...document.querySelectorAll(".filter")];
+    const filterButtons = [...document.querySelectorAll(".technologies .filter")];
     const makeFilterHandler = (button) => () => {
       const category = button.dataset.filter;
       filterButtons.forEach((other) => other.setAttribute("aria-pressed", String(other === button)));
@@ -212,7 +212,30 @@ export default function HomeClient({ articles }) {
       document.removeEventListener("keydown", onGlobalKeydown);
       filterHandlers.forEach(({ button, handler }) => button.removeEventListener("click", handler));
     };
-  }, []);
+  }, [labsPage]);
+
+  if (labsPage) {
+    const homeLinks = (markup) => markup.replace(/href="#/g, 'href="/#').replace(/src="assets\//g, 'src="/assets/');
+    const header = homeLinks(bodyChunkA.match(/<header class="header">[\s\S]*?<\/header>/)[0]).replace('href="/labs"', 'href="/labs" aria-current="page"');
+    return <>
+      <a className="skip" href="#main">Skip to content</a>
+      <div className="site-shell">
+        <main id="main">
+          <div className="panel">
+            <div dangerouslySetInnerHTML={{ __html: header }} />
+            <section className="labs-intro" aria-labelledby="labs-title">
+              <p className="eyebrow">Security Labs</p>
+              <h1 id="labs-title">Built to <em>understand.</em><br />Documented to share.</h1>
+              <p>Hands-on security experiments in isolated environments. Public code, documented decisions and evidence you can explore.</p>
+            </section>
+          </div>
+          <LabsContent />
+        </main>
+        <div dangerouslySetInnerHTML={{ __html: homeLinks(bodyFooter) }} />
+      </div>
+      <div dangerouslySetInnerHTML={{ __html: homeLinks(bodyDialogs) }} />
+    </>;
+  }
 
   return (
     <>
