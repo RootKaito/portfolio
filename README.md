@@ -1,6 +1,8 @@
 # Portfolio — Lucas Rocha
 
-Site Next.js com edições em inglês do Cyber Coffee em `/writing`.
+Site Next.js com edições em inglês do Cyber Coffee em `/writing` e laboratórios públicos em `/labs`.
+
+Os dois laboratórios publicados são definidos em `app/lib/labs.js`, compartilhados pela homepage e pelo catálogo. Adicione somente projetos já publicados, sem dados corporativos ou proprietários.
 
 ## Desenvolvimento
 

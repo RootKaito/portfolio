@@ -7,7 +7,7 @@ export default function WritingLayout({ children }) {
     <div className="site-shell writing-shell"><div className="panel">
       <header className="writing-header">
         <Link className="brand" href="/" aria-label="Lucas Rocha, home"><b>LR</b><span>Lucas Rocha</span></Link>
-        <nav aria-label="Main navigation"><Link href="/">Home</Link><Link href="/#projects">Work</Link><Link href="/writing" aria-current="page">Writing</Link><Link href="/#about">About</Link></nav>
+        <nav aria-label="Main navigation"><Link href="/">Home</Link><Link href="/#projects">Work</Link><Link href="/labs">Labs</Link><Link href="/writing" aria-current="page">Writing</Link><Link href="/#about">About</Link></nav>
         <Link className="button primary writing-contact" href="/#contact">Let’s talk <span aria-hidden="true">↗</span></Link>
       </header>
       <main id="writing-main">{children}</main>
