@@ -10,5 +10,11 @@ export const publishedLabs = [
     "category": "Defensive Security",
     "documentation": "https://rootkaito.github.io/honeypot/",
     "markup": "<article class=\"project-card\"><img src=\"/assets/laptop-dark.png\" alt=\"\" loading=\"lazy\"><div class=\"card-shade\"></div><div class=\"card-content\"><p class=\"eyebrow\">Defensive security lab</p><h3><a class=\"card-button\" href=\"https://rootkaito.github.io/honeypot/\" target=\"_blank\" rel=\"noopener noreferrer\">Posto de Observação</a></h3><p>An isolated Cowrie honeypot and Suricata IDS lab, with Alloy, Loki and Grafana for log collection and analysis.</p><ul class=\"tags\"><li>Cowrie</li><li>Suricata</li><li>Grafana</li></ul></div><span class=\"mobile-arrow\" aria-hidden=\"true\">↗</span></article>"
+  },
+  {
+    "title": "Android ContentProvider Exposure",
+    "category": "Mobile Security",
+    "documentation": "https://rootkaito.github.io/mobilesec-labnotes/",
+    "markup": "<article class=\"project-card\"><img src=\"/assets/laptop-dark.png\" alt=\"\" loading=\"lazy\"><div class=\"card-shade\"></div><div class=\"card-content\"><p class=\"eyebrow\">Mobile security lab</p><h3><a class=\"card-button\" href=\"https://rootkaito.github.io/mobilesec-labnotes/\" target=\"_blank\" rel=\"noopener noreferrer\">Android ContentProvider Exposure</a></h3><p>An educational InsecureShop lab exploring ContentProvider permissions, APK analysis with JADX and a separate Kotlin app to demonstrate unintended data access in a controlled Android emulator.</p><ul class=\"tags\"><li>Android</li><li>Kotlin</li><li>JADX</li><li>InsecureShop</li></ul></div><span class=\"mobile-arrow\" aria-hidden=\"true\">↗</span></article>"
   }
 ];
