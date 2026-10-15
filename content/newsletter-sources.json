@@ -1,5 +1,268 @@
 [
   {
+    "sourceUrl": "https://www.linkedin.com/pulse/bola-é-falha-mais-comum-de-api-e-fácil-não-perceber-que-lucas-rocha--u7kgf",
+    "title": "BOLA é a falha mais comum de API... e a mais fácil de não perceber que você tem",
+    "isoDate": "2026-10-15",
+    "publishedAt": "2026-10-15T13:01:08.000Z",
+    "content": [
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Trocar um número na URL e ver o pedido de outra pessoa é o teste de segurança mais simples que existe — e o mais frequentemente pulado, porque a API \"já tem autenticação\".",
+            "id": "0"
+          }
+        ]
+      },
+      {
+        "tag": "hr",
+        "children": []
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Autenticação responde \"quem é você\". Autorização responde \"o que você pode ver\". A confusão entre as duas é a origem da falha mais recorrente do OWASP API Security Top 10, o Broken Object Level Authorization — BOLA —, e ela sobrevive porque uma API pode estar com autenticação impecável e ainda assim vazar tudo, porque ninguém verificou a segunda pergunta.",
+            "id": "1"
+          }
+        ]
+      },
+      {
+        "tag": "h3",
+        "children": [
+          {
+            "text": "O exemplo que cabe numa linha de log",
+            "id": "2"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "GET /pedidos/1234 retorna o pedido de quem está autenticado — desde que o backend confira, a cada chamada, se o pedido 1234 pertence a esse usuário. A falha de BOLA acontece quando o endpoint checa \"existe um token válido?\" e para por aí, sem checar \"esse token tem posse sobre esse recurso específico?\". Trocar 1234 por 1235 na URL, com o mesmo token, ainda válido e ainda seu, retorna o pedido de outra pessoa. Não precisa de exploit sofisticado — precisa só de alguém tentar.",
+            "id": "3"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Esse é o motivo de BOLA aparecer no topo da lista da OWASP ano após ano: o teste que a encontra é trivial de rodar e a correção é conceitualmente simples (checar posse do objeto, não só validade do token), mas a falha se esconde bem porque tudo \"funciona\" no teste feliz — o usuário autenticado acessando o próprio dado nunca revela o problema.",
+            "id": "4"
+          }
+        ]
+      },
+      {
+        "tag": "h3",
+        "children": [
+          {
+            "text": "Rate limiting é camada separada, não substituto",
+            "id": "5"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Mesmo com autorização por objeto implementada corretamente, uma API sem limite de taxa continua vulnerável a enumeração: tentar sequencialmente milhares de IDs até achar um acessível, ou simplesmente sobrecarregar um endpoint caro. Rate limiting não substitui checagem de posse — ele reduz o dano de alguém tentando descobrir por força bruta o que a checagem de posse deveria ter impedido de qualquer forma. As duas defesas resolvem problemas diferentes e nenhuma cobre a ausência da outra.",
+            "id": "6"
+          }
+        ]
+      },
+      {
+        "tag": "h3",
+        "children": [
+          {
+            "text": "Autenticação máquina-a-máquina não é \"coloca uma API key\"",
+            "id": "7"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Para chamadas entre serviços, três padrões comuns carregam níveis de segurança bem diferentes. API key estática é o mais simples e o mais frágil — um valor de longa duração que, uma vez vazado (log, repositório, variável de ambiente exposta), continua válido até alguém lembrar de rotacionar. OAuth2 client credentials já introduz token de vida curta e escopo declarado, reduzindo a janela de uso de uma credencial vazada. mTLS vai além: a identidade do chamador é o próprio certificado, verificado na camada de transporte antes de qualquer requisição ser processada — o padrão mais forte, ao custo de mais complexidade operacional para gerenciar e rotacionar certificados.",
+            "id": "8"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "A escolha entre os três não é sobre qual é \"mais moderno\" — é sobre quanto dano um vazamento de credencial causaria e por quanto tempo, multiplicado pela complexidade operacional que o time consegue sustentar de verdade.",
+            "id": "9"
+          }
+        ]
+      },
+      {
+        "tag": "h3",
+        "children": [
+          {
+            "text": "Teste de autorização pertence ao CI, não só ao pentest anual",
+            "id": "10"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "O padrão que realmente pega BOLA cedo é rodar, a cada build, uma suíte que autentica como o usuário A e tenta acessar recursos do usuário B sistematicamente — não esperar pelo pentest anual para descobrir que um endpoint novo, adicionado três sprints atrás, nunca teve essa checagem. Segurança de API que depende só de auditoria externa periódica sempre vai encontrar a falha meses depois de ela ter sido introduzida, não no momento em que o código que a criou foi mergeado.",
+            "id": "11"
+          }
+        ]
+      },
+      {
+        "tag": "h3",
+        "children": [
+          {
+            "text": "O que levar disto",
+            "id": "12"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "BOLA existe porque autenticação e autorização são perguntas diferentes, e é fácil implementar bem a primeira e esquecer completamente da segunda — o sintoma nunca aparece no caminho feliz, só quando alguém, mal-intencionado ou não, troca um ID na URL. Rate limiting protege contra abuso mesmo quando a autorização está certa; nenhum dos dois substitui o outro. E a defesa mais barata é testar posse de objeto continuamente no CI, não descobrir a falha um ano depois de ela existir em produção.",
+            "id": "13"
+          }
+        ]
+      },
+      {
+        "tag": "hr",
+        "children": []
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Fontes",
+            "id": "14"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "OWASP API Security Top 10 (2023) — API1:2023 Broken Object Level Authorization (",
+            "id": "15"
+          },
+          {
+            "tag": "a",
+            "href": "http://owasp.org/",
+            "children": [
+              {
+                "text": "owasp.org",
+                "id": "16"
+              }
+            ]
+          },
+          {
+            "text": ") — BOLA como risco nº 1 da lista, mecanismo do ataque e por que é comum em APIs.",
+            "id": "17"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "OWASP API Security Top 10 (2023) — API4:2023 Unrestricted Resource Consumption (",
+            "id": "18"
+          },
+          {
+            "tag": "a",
+            "href": "http://owasp.org/",
+            "children": [
+              {
+                "text": "owasp.org",
+                "id": "19"
+              }
+            ]
+          },
+          {
+            "text": ") — risco separado de falta de rate limiting.",
+            "id": "20"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "tag": "a",
+            "href": "http://oauth.net/",
+            "children": [
+              {
+                "text": "OAuth.net",
+                "id": "21"
+              }
+            ]
+          },
+          {
+            "text": " — Client Credentials Grant, RFC 6749 §4.4 (",
+            "id": "22"
+          },
+          {
+            "tag": "a",
+            "href": "http://oauth.net/",
+            "children": [
+              {
+                "text": "oauth.net",
+                "id": "23"
+              }
+            ]
+          },
+          {
+            "text": ") — fluxo padrão de autenticação máquina-a-máquina via OAuth2.",
+            "id": "24"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "OWASP Cheat Sheet Series — Authorization Regression Testing (",
+            "id": "25"
+          },
+          {
+            "tag": "a",
+            "href": "http://cheatsheetseries.owasp.org/",
+            "children": [
+              {
+                "text": "cheatsheetseries.owasp.org",
+                "id": "26"
+              }
+            ]
+          },
+          {
+            "text": ") — como automatizar teste de autorização no CI.",
+            "id": "27"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Próxima edição: RBAC na prática — permissões que escalam sem virar caos.",
+            "id": "28"
+          }
+        ]
+      }
+    ],
+    "sourceHash": "0f7fa299ec4baea518414db28f4eed1e8600f8784110b3ab5c0a38764e0cb242"
+  },
+  {
     "sourceUrl": "https://www.linkedin.com/pulse/prompt-injection-não-tem-patch-e-é-por-isso-que-muda-como-rocha--i8tsf",
     "title": "Prompt injection não tem patch — e é por isso que muda como você desenha o produto",
     "isoDate": "2026-10-08",
