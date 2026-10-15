@@ -50,7 +50,7 @@ test('uses fallback after exhausted 503 retries and records the successful model
   calls.push(url);
   return url.includes('/gemini-3.8-flash:') ? {ok:false,status:503} : {ok:true,json:async()=>({candidates:[{finishReason:'STOP',content:{parts:[{text:JSON.stringify(translated())}]}}]})};
  };
- const article=await translateWithFallback(source(),covers,{apiKey:'test',fetcher,sleep:async()=>{}});
+ const article=await translateWithFallback(source(),covers,{apiKey:'test',fetcher,fallbackModels:['gemini-2.5-flash'],sleep:async()=>{}});
  assert.equal(calls.length,4);
  assert.equal(article.translationModel,'gemini-2.5-flash');
 });
@@ -60,4 +60,22 @@ test('fallback does not bypass authentication failures or invalid translations',
   await assert.rejects(()=>translateWithFallback(source(),covers,{apiKey:'test',fetcher:async()=>{calls++;return response},sleep:async()=>{}}));
   assert.equal(calls,1);
  }
+});
+
+test('discovers supported Flash fallbacks and excludes absent and image models', async () => {
+ const calls=[];
+ const fetcher=async url=>{
+  calls.push(url);
+  if (url.includes('?pageSize=')) return {ok:true,json:async()=>({models:[
+   {name:'models/gemini-3.6-flash',supportedGenerationMethods:['generateContent']},
+   {name:'models/gemini-2.5-flash-image',supportedGenerationMethods:['generateContent']},
+  ]})};
+  if (url.includes('/gemini-3.8-flash:')) return {ok:false,status:503};
+  return {ok:true,json:async()=>({candidates:[{finishReason:'STOP',content:{parts:[{text:JSON.stringify(translated())}]}}]})};
+ };
+ const article=await translateWithFallback(source(),covers,{apiKey:'test',discoverModels:true,fallbackModels:['gemini-2.5-flash'],fetcher,sleep:async()=>{}});
+ assert.equal(article.translationModel,'gemini-3.6-flash');
+ assert.equal(calls.length,5);
+ assert(!calls.some(url=>url.includes('/gemini-2.5-flash:')));
+ assert(!calls.some(url=>url.includes('-image:')));
 });

@@ -85,8 +85,20 @@ export async function translateArticle(source, covers, { apiKey, model = 'gemini
 
 // Switch only for availability/quota failures, never to bypass content validation.
 export async function translateWithFallback(source, covers, options = {}) {
-  const { model = 'gemini-3.8-flash', fallbackModels = ['gemini-2.5-flash'], ...rest } = options;
-  const models = [...new Set([model, ...fallbackModels])];
+  const { model = 'gemini-3.8-flash', fallbackModels = [], discoverModels = false, ...rest } = options;
+  let alternatives = fallbackModels;
+  if (discoverModels && rest.apiKey) {
+    const response = await (rest.fetcher || fetch)('https://generativelanguage.googleapis.com/v1beta/models?pageSize=1000', {
+      headers: { 'x-goog-api-key': rest.apiKey }, signal: AbortSignal.timeout(30000),
+    });
+    if (!response.ok) throw new Error(`Gemini model discovery HTTP ${response.status}`);
+    const available = (await response.json()).models || [];
+    const names = available.filter(m => m.supportedGenerationMethods?.includes('generateContent')).map(m => m.name.replace(/^models\//, ''));
+    const automatic = names.filter(name => /^gemini-\d+(?:\.\d+)?-flash(?:-lite)?$/.test(name)).sort((a, b) => a.endsWith('-lite') - b.endsWith('-lite') || b.localeCompare(a, 'en', { numeric: true }));
+    alternatives = [...fallbackModels.filter(name => names.includes(name)), ...automatic];
+  }
+  const models = [...new Set([model, ...alternatives])].slice(0, 3);
+  console.log(`Translation model candidates: ${models.join(', ')}`);
   for (const [index, candidate] of models.entries()) {
     try {
       const article = await translateArticle(source, covers, { ...rest, model: candidate });

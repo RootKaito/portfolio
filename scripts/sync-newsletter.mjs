@@ -32,7 +32,7 @@ const errors = [];
 let failures = 0;
 for (const source of pending.slice(0, 3)) {
   try {
-    const article = await translateWithFallback(source, covers, { apiKey: process.env.GEMINI_API_KEY, model: process.env.GEMINI_MODEL || 'gemini-3.8-flash', fallbackModels: (process.env.GEMINI_FALLBACK_MODELS ?? 'gemini-2.5-flash').split(',').map(value => value.trim()).filter(Boolean) });
+    const article = await translateWithFallback(source, covers, { apiKey: process.env.GEMINI_API_KEY, model: process.env.GEMINI_MODEL || 'gemini-3.8-flash', discoverModels: true, fallbackModels: (process.env.GEMINI_FALLBACK_MODELS ?? '').split(',').map(value => value.trim()).filter(Boolean) });
     generated.push(article);
     translated.push({ title: article.title, slug: article.slug, sourceUrl: article.sourceUrl, model: article.translationModel });
     await save('content/generated-articles.json', generated);

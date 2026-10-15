@@ -37,7 +37,7 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_MODEL: ${{ vars.GEMINI_MODEL || 'gemini-3.8-flash' }}
-          GEMINI_FALLBACK_MODELS: ${{ vars.GEMINI_FALLBACK_MODELS || 'gemini-2.5-flash' }}
+          GEMINI_FALLBACK_MODELS: ${{ vars.GEMINI_FALLBACK_MODELS }}
       - name: Validate site before publishing
         run: npm run build
       - name: Save source archive and validated translations
