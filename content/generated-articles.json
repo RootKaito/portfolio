@@ -279,5 +279,254 @@
         ]
       }
     ]
+  },
+  {
+    "slug": "bola-is-the-most-common-api-flaw-and-the-easiest-to-not-realize-you-have-c29356f2",
+    "title": "BOLA is the most common API flaw... and the easiest to not realize you have",
+    "summary": "BOLA occurs when APIs check token validity but fail to verify object ownership. Discover why it tops OWASP lists and how continuous CI testing catches it early.",
+    "lead": "BOLA occurs when APIs check token validity but fail to verify object ownership. Discover why it tops OWASP lists and how continuous CI testing catches it early.",
+    "isoDate": "2026-10-15",
+    "tags": [
+      "bola",
+      "api security",
+      "authorization"
+    ],
+    "sourceUrl": "https://www.linkedin.com/pulse/bola-é-falha-mais-comum-de-api-e-fácil-não-perceber-que-lucas-rocha--u7kgf",
+    "sourceHash": "0f7fa299ec4baea518414db28f4eed1e8600f8784110b3ab5c0a38764e0cb242",
+    "coverId": "bola",
+    "coverReason": "The article focuses directly on Broken Object Level Authorization (BOLA) in APIs, explaining its mechanisms, risks, and mitigation strategies.",
+    "image": "/assets/writing/library/bola.webp",
+    "cardImage": "/assets/writing/library/bola-card.webp",
+    "imageAlt": "A misrouted API request reaches another customer’s data compartment.",
+    "introduction": [],
+    "sections": [],
+    "content": [
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Changing a number in the URL and seeing someone else's order is the simplest security test that exists — and the one most frequently skipped, because the API \"already has authentication.\""
+          }
+        ]
+      },
+      {
+        "tag": "hr",
+        "children": []
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Authentication answers \"who are you.\" Authorization answers \"what can you see.\" The confusion between the two is the source of the most recurring flaw in the OWASP API Security Top 10, Broken Object Level Authorization — BOLA —, and it survives because an API can have flawless authentication and still leak everything, because nobody checked the second question."
+          }
+        ]
+      },
+      {
+        "tag": "h3",
+        "children": [
+          {
+            "text": "The example that fits in a log line"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "GET /pedidos/1234 returns the order of whoever is authenticated — provided the backend checks, on every call, whether order 1234 belongs to that user. The BOLA vulnerability happens when the endpoint checks \"is there a valid token?\" and stops there, without checking \"does this token have ownership over this specific resource?\". Changing 1234 to 1235 in the URL, with the same token, still valid and still yours, returns someone else's order. It doesn't require a sophisticated exploit — it just requires someone to try."
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "That is the reason BOLA appears at the top of OWASP's list year after year: the test that finds it is trivial to run and the fix is conceptually simple (checking object ownership, not just token validity), but the vulnerability hides well because everything \"works\" in the happy path — the authenticated user accessing their own data never reveals the problem."
+          }
+        ]
+      },
+      {
+        "tag": "h3",
+        "children": [
+          {
+            "text": "Rate limiting is a separate layer, not a substitute"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Even with object-level authorization correctly implemented, an API without rate limiting remains vulnerable to enumeration: sequentially trying thousands of IDs until finding an accessible one, or simply overloading an expensive endpoint. Rate limiting does not replace ownership checks — it reduces the damage of someone trying to brute-force what the ownership check should have prevented anyway. The two defenses solve different problems and neither covers the absence of the other."
+          }
+        ]
+      },
+      {
+        "tag": "h3",
+        "children": [
+          {
+            "text": "Machine-to-machine authentication is not \"slap an API key on it\""
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "For calls between services, three common patterns carry very different levels of security. A static API key is the simplest and most fragile — a long-lived value that, once leaked (log, repository, exposed environment variable), remains valid until someone remembers to rotate it. OAuth2 client credentials already introduces a short-lived token and declared scope, reducing the window of use for a leaked credential. mTLS goes further: the caller's identity is the certificate itself, verified at the transport layer before any request is processed — the strongest pattern, at the cost of more operational complexity to manage and rotate certificates."
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "The choice among the three is not about which is \"more modern\" — it is about how much damage a credential leak would cause and for how long, multiplied by the operational complexity the team can actually sustain."
+          }
+        ]
+      },
+      {
+        "tag": "h3",
+        "children": [
+          {
+            "text": "Authorization testing belongs in CI, not just in the annual pentest"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "The pattern that truly catches BOLA early is running, with every build, a suite that authenticates as User A and systematically tries to access User B's resources — not waiting for the annual pentest to discover that a new endpoint, added three sprints ago, never had this check. API security that relies solely on periodic external audits will always find the vulnerability months after it was introduced, not when the code that created it was merged."
+          }
+        ]
+      },
+      {
+        "tag": "h3",
+        "children": [
+          {
+            "text": "What to take away from this"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "BOLA exists because authentication and authorization are different questions, and it is easy to implement the first well while completely forgetting the second — the symptom never appears in the happy path, only when someone, malicious or not, changes an ID in the URL. Rate limiting protects against abuse even when authorization is correct; neither replaces the other. And the cheapest defense is to continuously test object ownership in CI, rather than discovering the vulnerability a year after it existed in production."
+          }
+        ]
+      },
+      {
+        "tag": "hr",
+        "children": []
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Sources"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "OWASP API Security Top 10 (2023) — API1:2023 Broken Object Level Authorization ("
+          },
+          {
+            "tag": "a",
+            "href": "http://owasp.org/",
+            "children": [
+              {
+                "text": "owasp.org"
+              }
+            ]
+          },
+          {
+            "text": ") — BOLA as the list's #1 risk, attack mechanism, and why it is common in APIs."
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "OWASP API Security Top 10 (2023) — API4:2023 Unrestricted Resource Consumption ("
+          },
+          {
+            "tag": "a",
+            "href": "http://owasp.org/",
+            "children": [
+              {
+                "text": "owasp.org"
+              }
+            ]
+          },
+          {
+            "text": ") — separate risk regarding lack of rate limiting."
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "tag": "a",
+            "href": "http://oauth.net/",
+            "children": [
+              {
+                "text": "OAuth.net"
+              }
+            ]
+          },
+          {
+            "text": " — Client Credentials Grant, RFC 6749 §4.4 ("
+          },
+          {
+            "tag": "a",
+            "href": "http://oauth.net/",
+            "children": [
+              {
+                "text": "oauth.net"
+              }
+            ]
+          },
+          {
+            "text": ") — standard flow for machine-to-machine authentication via OAuth2."
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "OWASP Cheat Sheet Series — Authorization Regression Testing ("
+          },
+          {
+            "tag": "a",
+            "href": "http://cheatsheetseries.owasp.org/",
+            "children": [
+              {
+                "text": "cheatsheetseries.owasp.org"
+              }
+            ]
+          },
+          {
+            "text": ") — how to automate authorization testing in CI."
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Next edition: RBAC in practice — permissions that scale without turning into chaos."
+          }
+        ]
+      }
+    ],
+    "translationModel": "gemini-3.6-flash"
   }
 ]
