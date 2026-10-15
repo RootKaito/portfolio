@@ -1,6 +1,6 @@
 import { fileURLToPath } from 'node:url';
-import { readFile, writeFile, rename } from 'node:fs/promises';
-import { canonicalUrl, parseFeed, translateArticle } from './newsletter.mjs';
+import { readFile, writeFile, rename, appendFile } from 'node:fs/promises';
+import { canonicalUrl, parseFeed, translateWithFallback } from './newsletter.mjs';
 
 const read = file => readFile(new URL(`../${file}`, import.meta.url), 'utf8');
 const readJSON = async file => JSON.parse(await read(file));
@@ -27,13 +27,38 @@ covers.push(...await readJSON('content/existing-covers.json'));
 const published = new Set([...curated, ...generated.map(a => canonicalUrl(a.sourceUrl))]);
 const pending = archive.filter(a => !published.has(a.sourceUrl));
 console.log(`Feed: ${incoming.length}; archived: ${archive.length}; pending: ${pending.length}`);
+const translated = [];
+const errors = [];
 let failures = 0;
 for (const source of pending.slice(0, 3)) {
   try {
-    const article = await translateArticle(source, covers, { apiKey: process.env.GEMINI_API_KEY, model: process.env.GEMINI_MODEL || 'gemini-3.8-flash' });
+    const article = await translateWithFallback(source, covers, { apiKey: process.env.GEMINI_API_KEY, model: process.env.GEMINI_MODEL || 'gemini-3.8-flash', fallbackModels: (process.env.GEMINI_FALLBACK_MODELS ?? 'gemini-2.5-flash').split(',').map(value => value.trim()).filter(Boolean) });
     generated.push(article);
+    translated.push({ title: article.title, slug: article.slug, sourceUrl: article.sourceUrl, model: article.translationModel });
     await save('content/generated-articles.json', generated);
     console.log(`Translated: ${article.slug}; cover: ${article.coverId}`);
-  } catch (error) { failures++; console.error(`Translation failed for ${source.sourceUrl}: ${error.message}`); }
+  } catch (error) { failures++; errors.push({ sourceUrl: source.sourceUrl, message: error.message }); console.error(`Translation failed for ${source.sourceUrl}: ${error.message}`); }
+}
+const report = {
+  checkedAt: new Date().toISOString(),
+  feedArticles: incoming.length,
+  latestFeedPublication: incoming.map(a => a.publishedAt).sort().at(-1) || null,
+  archivedArticles: archive.length,
+  pendingBefore: pending.length,
+  translated,
+  remaining: pending.filter(source => !generated.some(article => canonicalUrl(article.sourceUrl) === source.sourceUrl)).map(({ title, sourceUrl }) => ({ title, sourceUrl })),
+  errors,
+};
+await writeFile('newsletter-sync-report.json', JSON.stringify(report, null, 2) + '\n');
+if (process.env.GITHUB_STEP_SUMMARY) {
+  await appendFile(process.env.GITHUB_STEP_SUMMARY, [
+    '## Cyber Coffee sync',
+    `Checked: ${report.checkedAt}`,
+    `Feed articles: ${report.feedArticles}; pending before: ${report.pendingBefore}; translated: ${translated.length}; remaining: ${report.remaining.length}; failures: ${errors.length}.`,
+    ...translated.map(article => `- Translated: ${article.slug}`),
+    ...(report.remaining.length ? ['Pending sources:', ...report.remaining.map(article => `- ${article.sourceUrl}`)] : []),
+    ...(errors.length ? ['Translation failed. See the sync step for details.'] : []),
+    '',
+  ].join('\n\n'));
 }
 if (failures) process.exitCode = 1;

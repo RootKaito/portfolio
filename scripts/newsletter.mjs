@@ -74,11 +74,27 @@ export async function translateArticle(source, covers, { apiKey, model = 'gemini
     if (!response.ok) {
       // Never log the request headers, key, or raw provider response.
       if ((response.status === 429 || response.status >= 500) && attempt < 2) { await sleep(30000 * (attempt + 1)); continue; }
-      throw new Error(`Gemini HTTP ${response.status}; check AI Studio model availability and free-tier quota`);
+      throw Object.assign(new Error(`Gemini HTTP ${response.status}; check AI Studio model availability and free-tier quota`), { status: response.status });
     }
     const data = await response.json();
     const candidate = data.candidates?.[0];
     if (candidate?.finishReason !== 'STOP') throw new Error('Gemini returned an incomplete or blocked response');
     return validateTranslation(source, JSON.parse(candidate.content.parts.filter(p => p.text && !p.thought).map(p => p.text).join('')), covers);
+  }
+}
+
+// Switch only for availability/quota failures, never to bypass content validation.
+export async function translateWithFallback(source, covers, options = {}) {
+  const { model = 'gemini-3.8-flash', fallbackModels = ['gemini-2.5-flash'], ...rest } = options;
+  const models = [...new Set([model, ...fallbackModels])];
+  for (const [index, candidate] of models.entries()) {
+    try {
+      const article = await translateArticle(source, covers, { ...rest, model: candidate });
+      return { ...article, translationModel: candidate };
+    } catch (error) {
+      const transient = error.status === 404 || error.status === 429 || error.status >= 500 || ['TimeoutError', 'AbortError'].includes(error.name) || (error instanceof TypeError && error.message === 'fetch failed');
+      if (!transient || index === models.length - 1) throw error;
+      console.warn(`Translation provider unavailable for ${candidate}; trying the configured fallback.`);
+    }
   }
 }

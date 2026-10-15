@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { canonicalUrl, extractContent, textNodes, parseFeed, validateTranslation, translateArticle } from './newsletter.mjs';
+import { canonicalUrl, extractContent, textNodes, parseFeed, validateTranslation, translateArticle, translateWithFallback } from './newsletter.mjs';
 const html = `<p>${'Um artigo completo de segurança de aplicações. '.repeat(20)}</p><h3>Exemplos</h3><p>Veja <a href="https://example.org/a">o exemplo</a> e <code>const token = 'secret';</code>.</p>`;
 const item = (date = 'Thu, 08 Oct 2026 12:02:06 GMT') => `<item><title>Título</title><link>https://pt.linkedin.com/pulse/example/</link><pubDate>${date}</pubDate><description><![CDATA[${html}]]></description></item>`;
 const feed = body => `<rss><channel>${body}</channel></rss>`;
@@ -42,4 +42,22 @@ test('retries transient API errors and refuses incomplete output',async()=>{
  await translateArticle(source(),covers,{apiKey:'test',fetcher,sleep:async()=>{}});
  assert.equal(calls,2);
  await assert.rejects(()=>translateArticle(source(),covers,{apiKey:'test',fetcher:async()=>({ok:true,json:async()=>({candidates:[{finishReason:'MAX_TOKENS'}]})})}),/incomplete/);
+});
+
+test('uses fallback after exhausted 503 retries and records the successful model', async () => {
+ const calls=[];
+ const fetcher=async url=>{
+  calls.push(url);
+  return url.includes('/gemini-3.8-flash:') ? {ok:false,status:503} : {ok:true,json:async()=>({candidates:[{finishReason:'STOP',content:{parts:[{text:JSON.stringify(translated())}]}}]})};
+ };
+ const article=await translateWithFallback(source(),covers,{apiKey:'test',fetcher,sleep:async()=>{}});
+ assert.equal(calls.length,4);
+ assert.equal(article.translationModel,'gemini-2.5-flash');
+});
+test('fallback does not bypass authentication failures or invalid translations', async () => {
+ for (const response of [{ok:false,status:403},{ok:true,json:async()=>({candidates:[{finishReason:'STOP',content:{parts:[{text:JSON.stringify({...translated(),translations:[]})}]}}]})}]) {
+  let calls=0;
+  await assert.rejects(()=>translateWithFallback(source(),covers,{apiKey:'test',fetcher:async()=>{calls++;return response},sleep:async()=>{}}));
+  assert.equal(calls,1);
+ }
 });

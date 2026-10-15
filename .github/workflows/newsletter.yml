@@ -1,8 +1,16 @@
 name: Publish newsletter
 on:
   schedule:
-    - cron: '17 * * * *'
+    - cron: '17,47 * * * *'
   workflow_dispatch:
+  repository_dispatch:
+    types: [newsletter-sync]
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/newsletter.yml
+      - scripts/newsletter.mjs
+      - scripts/sync-newsletter.mjs
 permissions:
   contents: write
 concurrency:
@@ -29,6 +37,7 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_MODEL: ${{ vars.GEMINI_MODEL || 'gemini-3.8-flash' }}
+          GEMINI_FALLBACK_MODELS: ${{ vars.GEMINI_FALLBACK_MODELS || 'gemini-2.5-flash' }}
       - name: Validate site before publishing
         run: npm run build
       - name: Save source archive and validated translations
@@ -42,6 +51,14 @@ jobs:
             git push origin HEAD:main
             echo 'changed=true' >> "$GITHUB_OUTPUT"
           fi
+      - name: Preserve sync report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: newsletter-sync-report
+          path: newsletter-sync-report.json
+          if-no-files-found: warn
+          retention-days: 14
       - name: Report translation failures
         if: steps.sync.outcome == 'failure'
         run: |
