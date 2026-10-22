@@ -528,5 +528,217 @@
       }
     ],
     "translationModel": "gemini-3.6-flash"
+  },
+  {
+    "slug": "rbac-in-practice-permissions-that-scale-without-becoming-chaos-b31ce118",
+    "title": "RBAC in Practice: Permissions That Scale Without Becoming Chaos",
+    "summary": "RBAC fails over time without regular maintenance. Learn how to model roles around functions, enforce least privilege, conduct periodic access reviews, and maintain auditable access logs.",
+    "lead": "RBAC fails over time without regular maintenance. Learn how to model roles around functions, enforce least privilege, conduct periodic access reviews, and maintain auditable access logs.",
+    "isoDate": "2026-10-22",
+    "tags": [
+      "RBAC",
+      "Access Control",
+      "Least Privilege"
+    ],
+    "sourceUrl": "https://www.linkedin.com/pulse/rbac-na-prática-permissões-que-escalam-sem-virar-caos-lucas-rocha--bqptf",
+    "sourceHash": "82617f539dca37f9baa33fcd0b3b35d63917d07e7ab38d04ac72752f9235914a",
+    "coverId": "rbac",
+    "coverReason": "The article focuses specifically on role-based access control design, least privilege, and role lifecycle management, which directly matches the 'rbac' cover.",
+    "image": "/assets/writing/library/rbac.webp",
+    "cardImage": "/assets/writing/library/rbac-card.webp",
+    "imageAlt": "Three role badges connect to different permitted resource compartments.",
+    "introduction": [],
+    "sections": [],
+    "content": [
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Good RBAC is a garden, not a monument — it requires constant pruning, and the model designed on day one is the easy part of the job."
+          }
+        ]
+      },
+      {
+        "tag": "hr",
+        "children": []
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Role-based access control starts simple and rots slowly, without anyone deliberately choosing to let it rot. On day one, half a dozen roles solve everything — admin, editor, reader, maybe a specific operations role. Two years later, no one knows for sure why so-and-so has access to X, there are 40 roles that no one can explain off the top of their head, and granting any new permission has turned into a ritual of fear, because touching the model feels too risky to fully understand. RBAC doesn't fail because of bad initial design — it fails due to a lack of continuous maintenance over time."
+          }
+        ]
+      },
+      {
+        "tag": "h3",
+        "children": [
+          {
+            "text": "Model roles based on function, not person"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "The founding mistake, almost always made with good intentions: creating a new role to accommodate the access exception of a specific person, instead of adjusting the existing model or questioning whether the exception truly needs to exist. This silently multiplies roles until the model becomes a soup where each role is, in practice, a person disguised as a function."
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "A good role maps to a real and stable organizational function — \"claims analyst\", \"platform engineer\", \"account manager\" — not \"what John specifically needs access to today\". If the answer to \"why does this role exist\" is a person's name instead of a function, the model has already begun to rot, even if the rest of the structure seems healthy."
+          }
+        ]
+      },
+      {
+        "tag": "h3",
+        "children": [
+          {
+            "text": "Least privilege is the default, not the exception"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Grant the minimum access necessary for the role to perform its job, and expand on justified and recorded demand — never the reverse route of granting broad access out of the gate and restricting it later if someone complains. Broad access granted \"for convenience,\" to prevent future requests for expansion, is silent security debt that no one actively reviews until the day of an incident, when suddenly who had access to what matters a lot."
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "A restrictive default costs a little friction at the beginning — someone will need to request access to something they \"will probably need anyway\" — and that friction is precisely the price that prevents a larger leak later on. Trading small, constant friction for large, rare risk is almost always the right trade-off in access control."
+          }
+        ]
+      },
+      {
+        "tag": "h3",
+        "children": [
+          {
+            "text": "Periodic access review is what prevents erosion"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Granted access tends never to be revoked spontaneously by anyone — the person changes teams, leaves the project, switches roles within the company, and the old access simply remains, because revoking is not the natural next step of any of these organizational events. No one removes access \"by memory\"; someone needs to ask actively."
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Periodic review — quarterly or semiannually, depending on system criticality — that explicitly asks \"who has what, and does this still make sense for this person's current function?\" is the only real remedy against this silent accumulation of privilege, which over years turns a well-designed RBAC into a security liability that is almost impossible to audit retroactively without the habit of constant review."
+          }
+        ]
+      },
+      {
+        "tag": "h3",
+        "children": [
+          {
+            "text": "Auditing and compliance mapping close the loop"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "In a regulated environment, RBAC is not just an operational system configuration — it is control evidence required by audit frameworks. Being able to demonstrate, with historical logs, who has access to what, under what justification, and how that maps to a reference framework (ISO 27001, SOC 2, access controls required by LGPD) transforms the model from an \"IT configuration that only the technical team understands\" into an \"auditable governance control that any external auditor can verify.\""
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "In practice, this requires that every access grant and revocation be logged in a way that withstands an audit inquiry made months later — ensuring not only that current access is correct, but that the history of how it reached that state can be reconstructed."
+          }
+        ]
+      },
+      {
+        "tag": "h3",
+        "children": [
+          {
+            "text": "Key takeaways"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Good RBAC is a garden, not a monument: the initial design — no matter how well thought out, mapping function rather than person and starting from least privilege — is the easy part of the job. What separates maturity from chaos over the years is the discipline of constant pruning: reviewing access periodically, resisting the urge to create roles for individual exceptions, and keeping grant records auditable from the start, rather than scrambling to reconstruct that history under pressure the day an auditor asks."
+          }
+        ]
+      },
+      {
+        "tag": "hr",
+        "children": []
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Sources"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "tag": "ul",
+            "children": [
+              {
+                "tag": "li",
+                "children": [
+                  {
+                    "tag": "a",
+                    "href": "https://csrc.nist.gov/projects/role-based-access-control/faqs",
+                    "children": [
+                      {
+                        "text": "NIST — Role Based Access Control (RBAC) FAQ"
+                      }
+                    ]
+                  },
+                  {
+                    "text": " — reference model formalized by Ferraiolo and Kuhn (NIST), basis of the ANSI/INCITS 359 standard."
+                  }
+                ]
+              },
+              {
+                "tag": "li",
+                "children": [
+                  {
+                    "tag": "a",
+                    "href": "https://www.isms.online/iso-27001/annex-a-2022/5-18-access-rights-2022/",
+                    "children": [
+                      {
+                        "text": "ISO/IEC 27001:2022 — Annex A 5.18, Access Rights"
+                      }
+                    ]
+                  },
+                  {
+                    "text": " — requirement for periodic review of access rights and permission lifecycle management, cited as an audit reference."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "translationModel": "gemini-3.8-flash"
   }
 ]

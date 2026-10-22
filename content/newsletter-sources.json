@@ -1,5 +1,223 @@
 [
   {
+    "sourceUrl": "https://www.linkedin.com/pulse/rbac-na-prática-permissões-que-escalam-sem-virar-caos-lucas-rocha--bqptf",
+    "title": "RBAC na prática: permissões que escalam sem virar caos",
+    "isoDate": "2026-10-22",
+    "publishedAt": "2026-10-22T13:02:46.000Z",
+    "content": [
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "RBAC bom é jardim, não monumento — precisa de poda constante, e o modelo desenhado no dia um é a parte fácil do trabalho.",
+            "id": "0"
+          }
+        ]
+      },
+      {
+        "tag": "hr",
+        "children": []
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Controle de acesso baseado em papéis começa simples e apodrece devagar, sem que ninguém decida deliberadamente deixar apodrecer. No dia um, meia dúzia de papéis resolve tudo — admin, editor, leitor, talvez um papel específico de operação. Dois anos depois, ninguém sabe ao certo por que fulano tem acesso a X, existem 40 papéis que ninguém consegue explicar de cabeça, e conceder qualquer permissão nova virou um ritual de medo, porque mexer no modelo parece arriscado demais para entender por completo. RBAC não falha por causa de design ruim no início — falha por falta de manutenção contínua ao longo do tempo.",
+            "id": "1"
+          }
+        ]
+      },
+      {
+        "tag": "h3",
+        "children": [
+          {
+            "text": "Modele papéis a partir de função, não de pessoa",
+            "id": "2"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "O erro fundador, quase sempre cometido com boa intenção: criar um papel novo para acomodar a exceção de acesso de uma pessoa específica, em vez de ajustar o modelo existente ou questionar se a exceção realmente precisa existir. Isso multiplica papéis de forma silenciosa até o modelo virar uma sopa onde cada papel é, na prática, uma pessoa disfarçada de função.",
+            "id": "3"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Papel bom mapeia uma função organizacional real e estável — \"analista de sinistro\", \"engenheiro de plataforma\", \"gerente de conta\" — não \"o que o João especificamente precisa ter acesso hoje\". Se a resposta para \"por que esse papel existe\" é o nome de uma pessoa em vez de uma função, o modelo já começou a apodrecer, mesmo que o resto da estrutura pareça saudável.",
+            "id": "4"
+          }
+        ]
+      },
+      {
+        "tag": "h3",
+        "children": [
+          {
+            "text": "Menor privilégio é o default, não a exceção",
+            "id": "5"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Conceda o mínimo de acesso necessário para a função exercer seu trabalho, e amplie sob demanda justificada e registrada — nunca o caminho inverso de dar acesso amplo de saída e restringir depois se alguém reclamar. Acesso amplo concedido \"por conveniência\", para evitar pedidos futuros de ampliação, é dívida de segurança silenciosa que ninguém revisa ativamente até o dia de um incidente, quando de repente importa muito quem tinha acesso a quê.",
+            "id": "6"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "O default restritivo custa um pouco de atrito no início — alguém vai precisar pedir acesso a algo que \"provavelmente vai precisar mesmo\" — e esse atrito é exatamente o preço que evita o vazamento maior depois. Trocar atrito pequeno e constante por risco grande e raro é, quase sempre, a troca certa em controle de acesso.",
+            "id": "7"
+          }
+        ]
+      },
+      {
+        "tag": "h3",
+        "children": [
+          {
+            "text": "Revisão periódica de acesso é o que impede a erosão",
+            "id": "8"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Acesso concedido tende a nunca ser revogado espontaneamente por ninguém — a pessoa muda de time, sai do projeto, troca de função dentro da empresa, e o acesso antigo simplesmente permanece, porque revogar não é o passo natural de nenhum desses eventos organizacionais. Ninguém tira acesso \"por lembrança\"; alguém precisa perguntar ativamente.",
+            "id": "9"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "A revisão periódica — trimestral ou semestral, dependendo da criticidade do sistema — que pergunta explicitamente \"quem tem o quê, e isso ainda faz sentido para a função atual dessa pessoa?\" é o único remédio real contra esse acúmulo silencioso de privilégio, que ao longo de anos transforma um RBAC bem desenhado em passivo de segurança quase impossível de auditar retroativamente sem o hábito da revisão constante.",
+            "id": "10"
+          }
+        ]
+      },
+      {
+        "tag": "h3",
+        "children": [
+          {
+            "text": "Auditoria e mapeamento a compliance fecham o ciclo",
+            "id": "11"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Em ambiente regulado, RBAC não é apenas configuração operacional de sistema — é evidência de controle exigida por framework de auditoria. Poder mostrar, com registro histórico, quem tem acesso a quê, por qual justificativa, e como isso mapeia a um framework de referência (ISO 27001, SOC 2, controles de acesso exigidos pela LGPD) transforma o modelo de \"configuração de TI que só o time técnico entende\" em \"controle de governança auditável que qualquer auditor externo consegue verificar\".",
+            "id": "12"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Isso exige, na prática, que toda concessão e revogação de acesso fique registrada de forma que sobreviva a uma pergunta de auditoria feita meses depois — não apenas que o acesso atual esteja correto, mas que o histórico de como se chegou até ali seja reconstruível.",
+            "id": "13"
+          }
+        ]
+      },
+      {
+        "tag": "h3",
+        "children": [
+          {
+            "text": "O que levar disto",
+            "id": "14"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "RBAC bom é jardim, não monumento: o desenho inicial — por mais bem pensado que seja, mapeando função em vez de pessoa e partindo de menor privilégio — é a parte fácil do trabalho. O que separa maturidade de caos ao longo dos anos é a disciplina de podar constantemente: revisar acesso periodicamente, resistir à tentação de criar papel para exceção individual, e manter o registro de concessão auditável desde o início, em vez de tentar reconstruir esse histórico sob pressão no dia em que um auditor pergunta.",
+            "id": "15"
+          }
+        ]
+      },
+      {
+        "tag": "hr",
+        "children": []
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "text": "Fontes",
+            "id": "16"
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "tag": "ul",
+            "children": [
+              {
+                "tag": "li",
+                "children": [
+                  {
+                    "tag": "a",
+                    "href": "https://csrc.nist.gov/projects/role-based-access-control/faqs",
+                    "children": [
+                      {
+                        "text": "NIST — Role Based Access Control (RBAC) FAQ",
+                        "id": "17"
+                      }
+                    ]
+                  },
+                  {
+                    "text": " — modelo de referência formalizado por Ferraiolo e Kuhn (NIST), base do padrão ANSI/INCITS 359.",
+                    "id": "18"
+                  }
+                ]
+              },
+              {
+                "tag": "li",
+                "children": [
+                  {
+                    "tag": "a",
+                    "href": "https://www.isms.online/iso-27001/annex-a-2022/5-18-access-rights-2022/",
+                    "children": [
+                      {
+                        "text": "ISO/IEC 27001:2022 — Annex A 5.18, Access Rights",
+                        "id": "19"
+                      }
+                    ]
+                  },
+                  {
+                    "text": " — exigência de revisão periódica de direitos de acesso e gestão de ciclo de vida de permissão, citada como referência de auditoria.",
+                    "id": "20"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "sourceHash": "82617f539dca37f9baa33fcd0b3b35d63917d07e7ab38d04ac72752f9235914a"
+  },
+  {
     "sourceUrl": "https://www.linkedin.com/pulse/bola-é-falha-mais-comum-de-api-e-fácil-não-perceber-que-lucas-rocha--u7kgf",
     "title": "BOLA é a falha mais comum de API... e a mais fácil de não perceber que você tem",
     "isoDate": "2026-10-15",
